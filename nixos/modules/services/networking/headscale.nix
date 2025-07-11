@@ -33,6 +33,12 @@ in
     services.headscale = {
       enable = lib.mkEnableOption "headscale, Open Source coordination server for Tailscale";
 
+      configPath = lib.mkOption {
+        type = lib.types.nullOr lib.types.path;
+        description = "Load configuration from FILE.";
+        default = null;
+      };
+
       package = lib.mkPackageOption pkgs "headscale" { };
 
       user = lib.mkOption {
@@ -556,7 +562,8 @@ in
   config = lib.mkIf cfg.enable {
     assertions = [
       {
-        assertion = with cfg.settings; dns.magic_dns -> dns.base_domain != "";
+        # assertion = with cfg.settings; dns.magic_dns -> dns.base_domain != "";
+        assertion = cfg.configPath != null || (with cfg.settings; dns.magic_dns -> dns.base_domain != "");
         message = "dns.base_domain must be set when using MagicDNS";
       }
       (assertRemovedOption [ "settings" "acl_policy_path" ] "Use `policy.path` instead.")
