@@ -3823,6 +3823,12 @@
     github = "bouk";
     githubId = 97820;
   };
+  bovi = {
+    name = "Borna";
+    github = "bornav";
+    githubId = 51048565;
+    matrix = "@bornav:matrix.icyla";
+  };
   bpaulin = {
     email = "brunopaulin@bpaulin.net";
     github = "bpaulin";
